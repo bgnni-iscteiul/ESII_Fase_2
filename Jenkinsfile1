@@ -32,7 +32,7 @@ stage ('Runing Container to test built Docker Image'){
     
 stage('Tag Docker Image'){
     powershell "docker tag ${imagename1} ${env.dockeruser}/wordpress:latest"
-    powershell "docker tag ${imagename2} ${env.dockeruser}/wordpress_mysql:latest"
+    powershell "docker tag ${imagename2} ${env.dockeruser}/mysql:latest"
     }
 
 stage('Docker Login and Push Image'){
@@ -40,7 +40,7 @@ stage('Docker Login and Push Image'){
     powershell "docker login -u ${dockeruser} -p ${dockerpasswd}"
     }
     powershell "docker push ${dockeruser}/wordpress:latest"
-    powershell "docker push ${dockeruser}/wordpress_mysql:latest"
+    powershell "docker push ${dockeruser}/mysql:latest"
     }
 
 }
