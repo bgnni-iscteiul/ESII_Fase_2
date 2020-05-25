@@ -4,7 +4,7 @@ def imagename2 = "mysql:latest"
 def container1 = "wordpress"
 def container2 = "wordpress_mysql"
 node {
-   echo 'Building Apache Docker Image'
+   echo 'Building Wordpress and Mysql Docker Images'
 
 stage('Git Checkout') {
     git 'https://github.com/bgnni-iscteiul/ESII_Fase_2'
@@ -26,8 +26,9 @@ stage('Remove Existing Container'){
     }
     
 stage ('Runing Container to test built Docker Image'){
-    powershell "docker run -dit --name ${container1} -p 9000:80 ${imagename1}"
     powershell "docker run -dit --name ${container2} -p 33060:3306  ${imagename2}"
+    powershell "docker run -dit --name ${container1} -p 9000:80 ${imagename1}"
+    
     }
     
 stage('Tag Docker Image'){
