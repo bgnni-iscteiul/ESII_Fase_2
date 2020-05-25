@@ -1,0 +1,46 @@
+def dockeruser = "bin0206"
+def imagename1 = "wordpress:latest"
+def imagename2 = "mysql:latest"
+def container1 = "wordpress"
+def container2 = "wordpress_mysql"
+node {
+   echo 'Building Apache Docker Image'
+
+stage('Git Checkout') {
+    git 'https://github.com/bgnni-iscteiul/ESII_Fase_2'
+    }
+    
+stage('Build Docker Image'){
+     powershell "docker build -t  ${imagename1} ."
+     powershell "docker build -t  ${imagename2} ."
+    }
+    
+stage('Stop Existing Container'){
+     powershell "docker stop ${container1}"
+     powershell "docker stop ${container2}"
+    }
+    
+stage('Remove Existing Container'){
+     powershell "docker rm ${container1}"
+     powershell "docker rm ${container2}"
+    }
+    
+stage ('Runing Container to test built Docker Image'){
+    powershell "docker run -dit --name ${container1} -p 9000:80 ${imagename1}"
+    powershell "docker run -dit --name ${container2} -p 33060:3306  ${imagename2}"
+    }
+    
+stage('Tag Docker Image'){
+    powershell "docker tag ${imagename1} ${env.dockeruser}/wordpress:latest"
+    powershell "docker tag ${imagename2} ${env.dockeruser}/wordpress_mysql:latest"
+    }
+
+stage('Docker Login and Push Image'){
+    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', passwordVariable: 'dockerpasswd', usernameVariable: 'dockeruser')]) {
+    powershell "docker login -u ${dockeruser} -p ${dockerpasswd}"
+    }
+    powershell "docker push ${dockeruser}/wordpress:latest"
+    powershell "docker push ${dockeruser}/wordpress_mysql:latest"
+    }
+
+}
