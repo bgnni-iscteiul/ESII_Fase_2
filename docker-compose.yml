@@ -2,7 +2,8 @@ version: '3'
 services:
   #Database MySql
   db:
-    image: mysql:latest
+    image: mysql:5.7
+    container_name: "wordpress_mysql"
     restart: always
     volumes:
        - db_data:/var/lib/mysql
@@ -17,7 +18,8 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:5.4.1
+    image: wordpress:latest
+    container_name: "wordpress"
     restart: always
     volumes:
       - ./wp-content:/var/www/html/wp-content 
@@ -27,7 +29,7 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
     ports:
-      - '80:80'
+      - '8000:80'
     networks:
       - back
 networks:
