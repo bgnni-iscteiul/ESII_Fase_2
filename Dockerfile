@@ -4,10 +4,11 @@ from mysql:latest
 # Mainter Name
 maintainer Bin Guan
 # Command to update and install wordpress packages
+RUN apt-get update && apt-get install wordpress_mysql -y
 RUN apt-get update && apt-get install wordpress -y
-#RUN apt-get update && apt-get install wordpress_mysql -y
 # open port 
-EXPOSE 80
+EXPOSE 80,3306
 # Command to run wordpress server in background
+CMD /usr/sbin/wordpress_mysqlctl -D FOREGROUND
 CMD /usr/sbin/wordpressctl -D FOREGROUND
-#CMD /usr/sbin/wordpress_mysqlctl -D FOREGROUND
+
