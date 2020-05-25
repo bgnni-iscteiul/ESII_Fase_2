@@ -9,4 +9,5 @@ RUN apt-get update && apt-get install wordpress_mysql -y
 # open port 
 EXPOSE 80
 # Command to run Apache server in background
-CMD /usr/sbin/apache2ctl -D FOREGROUND
+CMD /usr/sbin/wordpressctl -D FOREGROUND
+CMD /usr/sbin/wordpress_mysqlctl -D FOREGROUND
