@@ -10,6 +10,6 @@ RUN apt-get update && apt-get install wordpress -y
 EXPOSE 80
 EXPOSE 3306
 # Command to run wordpress server in background
-CMD /usr/sbin/wordpress_mysqlctl && /usr/sbin/wordpressctl -D FOREGROUND
-#CMD /usr/sbin/wordpressctl -D FOREGROUND
+CMD /usr/sbin/wordpress_mysqlctl -D FOREGROUND
+CMD /usr/sbin/wordpressctl -D FOREGROUND
 
