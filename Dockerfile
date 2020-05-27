@@ -1,15 +1,13 @@
 # Source Image name
-from wordpress:latest
-from mysql:latest
+from openjdk:7
 # Mainter Name
 maintainer Bin Guan
 # Command to update and install wordpress packages
-RUN apt-get update && apt-get install wordpress_mysql -y
-RUN apt-get update && apt-get install wordpress -y
+WORKDIR /usr/src/javaapp
+RUN javac HelloWorld.java
 # open port 
-EXPOSE 80
-EXPOSE 3306
+EXPOSE 8888
 # Command to run wordpress server in background
 CMD /usr/sbin/wordpress_mysqlctl -D FOREGROUND
-CMD /usr/sbin/wordpressctl -D FOREGROUND
+
 
