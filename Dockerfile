@@ -1,4 +1,5 @@
-FROM openjdk:7
-COPY C:/Program Files (x86)/Jenkins/workspace/Docker-Hello@tmp/HelloWorld.jar /usr/src/myapp
-WORKDIR /usr/src/myapp
-CMD ["java", "HelloWord.jar"]
+FROM java:8
+MAINTAINER bin
+WORKDIR /test
+COPY HelloWorld.jar /test/HelloWorld.jar
+CMD ["java","-jar","HelloWorld.jar","-Dfile.encoding=utf-8"]
